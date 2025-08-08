@@ -1,0 +1,22 @@
+{
+    "files.exclude": {
+        "**/vendor": true,
+        "**/node_modules": true,
+        "**/.git": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/*.log": true,
+        "**/coverage": true,
+        "**/.phpunit.result.cache": true,
+        "**/composer.lock": true
+    },
+    "search.exclude": {
+        "**/vendor": true,
+        "**/node_modules": true,
+        "**/.git": true
+    },
+    "files.watcherExclude": {
+        "**/vendor/**": true,
+        "**/node_modules/**": true
+    }
+} 

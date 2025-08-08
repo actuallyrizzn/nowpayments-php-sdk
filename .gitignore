@@ -41,4 +41,9 @@ docs/nowpayments-private-data.md
 
 # Backup files
 *.bak
-*.backup 
+*.backup
+
+# IDE specific files
+.idea/workspace.xml
+*.sublime-project
+*.sublime-workspace 
