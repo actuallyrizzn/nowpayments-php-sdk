@@ -36,6 +36,9 @@ Thumbs.db
 # Documentation
 /docs/_build/
 
+# Private data files
+docs/nowpayments-private-data.md
+
 # Backup files
 *.bak
 *.backup 
