@@ -1685,6 +1685,7 @@ curl -X GET "https://api.nowpayments.io/v1/conversion?limit=10" \
 
 This shows two conversions that were done.
 
+
 ## Conclusion
 
 This reference covered all publicly documented endpoints of the NOWPayments API, including Authentication, Payments (and Invoices), Recurring Payments (Subscriptions), Mass Payouts, Custody (sub-accounts), and Conversions. Each endpoint is described with its purpose, required and optional parameters, example cURL requests, and example responses for clarity. Use this as a guide for integrating NOWPayments into your application, and refer to the cited documentation for further details or any updates.
