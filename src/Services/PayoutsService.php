@@ -2,6 +2,7 @@
 
 namespace NowPayments\Services;
 
+use NowPayments\Exception\ApiException;
 use NowPayments\Exception\ValidationException;
 
 /**
@@ -14,7 +15,7 @@ class PayoutsService extends AbstractService
      *
      * @param array $data Payout data
      * @return array
-     * @throws ValidationException
+     * @throws ValidationException|ApiException
      */
     public function create(array $data): array
     {
@@ -37,10 +38,11 @@ class PayoutsService extends AbstractService
      * @param string $batchId Batch ID
      * @param string $code 2FA code
      * @return array
+     * @throws ApiException
      */
     public function verify(string $batchId, string $code): array
     {
-        return $this->post("payout/{$batchId}/verify", ['code' => $code]);
+        return $this->post("payout/$batchId/verify", ['code' => $code]);
     }
 
     /**
@@ -48,10 +50,11 @@ class PayoutsService extends AbstractService
      *
      * @param string $batchId Batch ID
      * @return array
+     * @throws ApiException
      */
     public function getStatus(string $batchId): array
     {
-        return $this->get("payout/{$batchId}");
+        return $this->get("payout/$batchId");
     }
 
     /**
@@ -59,6 +62,7 @@ class PayoutsService extends AbstractService
      *
      * @param array $filters Optional filters
      * @return array
+     * @throws ApiException
      */
     public function list(array $filters = []): array
     {
@@ -72,6 +76,7 @@ class PayoutsService extends AbstractService
      * @param string $currency Currency
      * @param string|null $extraId Extra ID (memo/tag)
      * @return array
+     * @throws ApiException
      */
     public function validateAddress(string $address, string $currency, ?string $extraId = null): array
     {
@@ -93,6 +98,7 @@ class PayoutsService extends AbstractService
      * @param array $withdrawals Array of withdrawal objects
      * @param array $options Additional options
      * @return array
+     * @throws ValidationException|ApiException
      */
     public function createPayout(array $withdrawals, array $options = []): array
     {
@@ -111,6 +117,7 @@ class PayoutsService extends AbstractService
      * @param float $amount Amount
      * @param array $options Additional options
      * @return array
+     * @throws ValidationException|ApiException
      */
     public function createSinglePayout(string $address, string $currency, float $amount, array $options = []): array
     {
@@ -132,6 +139,7 @@ class PayoutsService extends AbstractService
      * @param string $fiatCurrency Fiat currency
      * @param array $options Additional options
      * @return array
+     * @throws ValidationException|ApiException
      */
     public function createPayoutWithFiatAmount(
         string $address,
@@ -157,6 +165,7 @@ class PayoutsService extends AbstractService
      * @param int $limit Number of payouts to return
      * @param int $page Page number
      * @return array
+     * @throws ApiException
      */
     public function listByStatus(string $status, int $limit = 10, int $page = 0): array
     {
@@ -175,6 +184,7 @@ class PayoutsService extends AbstractService
      * @param int $limit Number of payouts to return
      * @param int $page Page number
      * @return array
+     * @throws ApiException
      */
     public function listByDateRange(string $dateFrom, string $dateTo, int $limit = 10, int $page = 0): array
     {
@@ -191,6 +201,7 @@ class PayoutsService extends AbstractService
      *
      * @param string $batchId Batch ID
      * @return bool
+     * @throws ApiException
      */
     public function isFinished(string $batchId): bool
     {
@@ -203,6 +214,7 @@ class PayoutsService extends AbstractService
      *
      * @param string $batchId Batch ID
      * @return bool
+     * @throws ApiException
      */
     public function isSending(string $batchId): bool
     {
@@ -215,6 +227,7 @@ class PayoutsService extends AbstractService
      *
      * @param string $batchId Batch ID
      * @return bool
+     * @throws ApiException
      */
     public function isFailed(string $batchId): bool
     {

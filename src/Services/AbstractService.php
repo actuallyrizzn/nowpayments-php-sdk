@@ -2,6 +2,7 @@
 
 namespace NowPayments\Services;
 
+use NowPayments\Exception\ValidationException;
 use NowPayments\NowPaymentsClient;
 use NowPayments\Exception\ApiException;
 use GuzzleHttp\Exception\RequestException;
@@ -122,7 +123,7 @@ abstract class AbstractService
      *
      * @param array $data The data to validate
      * @param array $requiredFields List of required field names
-     * @throws \InvalidArgumentException
+     * @throws ValidationException
      */
     protected function validateRequiredFields(array $data, array $requiredFields): void
     {
@@ -135,9 +136,7 @@ abstract class AbstractService
         }
         
         if (!empty($missing)) {
-            throw new \InvalidArgumentException(
-                'Missing required fields: ' . implode(', ', $missing)
-            );
+            throw new ValidationException('Missing required fields: ' . implode(', ', $missing));
         }
     }
-} 
+}

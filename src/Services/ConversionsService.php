@@ -2,6 +2,7 @@
 
 namespace NowPayments\Services;
 
+use NowPayments\Exception\ApiException;
 use NowPayments\Exception\ValidationException;
 
 /**
@@ -14,7 +15,7 @@ class ConversionsService extends AbstractService
      *
      * @param array $data Conversion data
      * @return array
-     * @throws ValidationException
+     * @throws ValidationException|ApiException
      */
     public function create(array $data): array
     {
@@ -28,10 +29,11 @@ class ConversionsService extends AbstractService
      *
      * @param string $conversionId Conversion ID
      * @return array
+     * @throws ApiException
      */
     public function getStatus(string $conversionId): array
     {
-        return $this->get("conversion/{$conversionId}");
+        return $this->get("conversion/$conversionId");
     }
 
     /**
@@ -39,6 +41,7 @@ class ConversionsService extends AbstractService
      *
      * @param array $filters Optional filters
      * @return array
+     * @throws ApiException
      */
     public function list(array $filters = []): array
     {
@@ -52,6 +55,7 @@ class ConversionsService extends AbstractService
      * @param string $toCurrency Target currency
      * @param float $amount Amount to convert
      * @return array
+     * @throws ValidationException|ApiException
      */
     public function createConversion(string $fromCurrency, string $toCurrency, float $amount): array
     {
@@ -67,6 +71,7 @@ class ConversionsService extends AbstractService
      *
      * @param float $amount Amount in BTC
      * @return array
+     * @throws ValidationException|ApiException
      */
     public function convertBtcToEth(float $amount): array
     {
@@ -78,6 +83,7 @@ class ConversionsService extends AbstractService
      *
      * @param float $amount Amount in ETH
      * @return array
+     * @throws ValidationException|ApiException
      */
     public function convertEthToBtc(float $amount): array
     {
@@ -89,6 +95,7 @@ class ConversionsService extends AbstractService
      *
      * @param float $amount Amount in BTC
      * @return array
+     * @throws ValidationException|ApiException
      */
     public function convertBtcToUsdt(float $amount): array
     {
@@ -100,6 +107,7 @@ class ConversionsService extends AbstractService
      *
      * @param float $amount Amount in ETH
      * @return array
+     * @throws ValidationException|ApiException
      */
     public function convertEthToUsdt(float $amount): array
     {
@@ -111,6 +119,7 @@ class ConversionsService extends AbstractService
      *
      * @param float $amount Amount in USDT
      * @return array
+     * @throws ValidationException|ApiException
      */
     public function convertUsdtToBtc(float $amount): array
     {
@@ -122,6 +131,7 @@ class ConversionsService extends AbstractService
      *
      * @param float $amount Amount in USDT
      * @return array
+     * @throws ValidationException|ApiException
      */
     public function convertUsdtToEth(float $amount): array
     {
@@ -135,6 +145,7 @@ class ConversionsService extends AbstractService
      * @param int $limit Number of conversions to return
      * @param int $offset Offset
      * @return array
+     * @throws ApiException
      */
     public function listByStatus(string $status, int $limit = 10, int $offset = 0): array
     {
@@ -152,6 +163,7 @@ class ConversionsService extends AbstractService
      * @param int $limit Number of conversions to return
      * @param int $offset Offset
      * @return array
+     * @throws ApiException
      */
     public function listByCurrency(string $currency, int $limit = 10, int $offset = 0): array
     {
@@ -167,6 +179,7 @@ class ConversionsService extends AbstractService
      *
      * @param string $conversionId Conversion ID
      * @return bool
+     * @throws ApiException
      */
     public function isCompleted(string $conversionId): bool
     {
@@ -179,6 +192,7 @@ class ConversionsService extends AbstractService
      *
      * @param string $conversionId Conversion ID
      * @return bool
+     * @throws ApiException
      */
     public function isPending(string $conversionId): bool
     {
@@ -191,6 +205,7 @@ class ConversionsService extends AbstractService
      *
      * @param string $conversionId Conversion ID
      * @return bool
+     * @throws ApiException
      */
     public function isFailed(string $conversionId): bool
     {

@@ -4,6 +4,7 @@ namespace NowPayments;
 
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\ClientInterface;
+use NowPayments\Exception\ApiException;
 use NowPayments\Services\PaymentsService;
 use NowPayments\Services\SubscriptionsService;
 use NowPayments\Services\PayoutsService;
@@ -168,6 +169,7 @@ class NowPaymentsClient
 
     /**
      * Check API status
+     * @throws ApiException
      */
     public function getStatus(): array
     {
@@ -176,6 +178,7 @@ class NowPaymentsClient
 
     /**
      * Get available currencies
+     * @throws ApiException
      */
     public function getCurrencies(): array
     {
@@ -184,6 +187,7 @@ class NowPaymentsClient
 
     /**
      * Get merchant active currencies
+     * @throws ApiException
      */
     public function getMerchantCurrencies(): array
     {

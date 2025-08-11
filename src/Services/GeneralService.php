@@ -2,6 +2,8 @@
 
 namespace NowPayments\Services;
 
+use NowPayments\Exception\ApiException;
+
 /**
  * Service for general API operations
  */
@@ -11,6 +13,7 @@ class GeneralService extends AbstractService
      * Check API status
      *
      * @return array
+     * @throws ApiException
      */
     public function getStatus(): array
     {
@@ -21,6 +24,7 @@ class GeneralService extends AbstractService
      * Get all available currencies
      *
      * @return array
+     * @throws ApiException
      */
     public function getCurrencies(): array
     {
@@ -31,6 +35,7 @@ class GeneralService extends AbstractService
      * Get merchant active currencies
      *
      * @return array
+     * @throws ApiException
      */
     public function getMerchantCurrencies(): array
     {
@@ -41,6 +46,7 @@ class GeneralService extends AbstractService
      * Get full currency details
      *
      * @return array
+     * @throws ApiException
      */
     public function getFullCurrencies(): array
     {
@@ -53,6 +59,7 @@ class GeneralService extends AbstractService
      * @param string $currencyFrom Source currency
      * @param string $currencyTo Target currency
      * @return array
+     * @throws ApiException
      */
     public function getMinAmount(string $currencyFrom, string $currencyTo): array
     {
@@ -69,6 +76,7 @@ class GeneralService extends AbstractService
      * @param string $currencyFrom Source currency
      * @param string $currencyTo Target currency
      * @return array
+     * @throws ApiException
      */
     public function getEstimate(float $amount, string $currencyFrom, string $currencyTo): array
     {
