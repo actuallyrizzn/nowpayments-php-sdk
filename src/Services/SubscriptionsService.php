@@ -2,6 +2,7 @@
 
 namespace NowPayments\Services;
 
+use NowPayments\Exception\ApiException;
 use NowPayments\Exception\ValidationException;
 
 /**
@@ -14,7 +15,7 @@ class SubscriptionsService extends AbstractService
      *
      * @param array $data Plan data
      * @return array
-     * @throws ValidationException
+     * @throws ValidationException|ApiException
      */
     public function createPlan(array $data): array
     {
@@ -29,10 +30,11 @@ class SubscriptionsService extends AbstractService
      * @param string $planId Plan ID
      * @param array $data Update data
      * @return array
+     * @throws ApiException
      */
     public function updatePlan(string $planId, array $data): array
     {
-        return $this->patch("subscriptions/plans/{$planId}", $data);
+        return $this->patch("subscriptions/plans/$planId", $data);
     }
 
     /**
@@ -40,16 +42,18 @@ class SubscriptionsService extends AbstractService
      *
      * @param string $planId Plan ID
      * @return array
+     * @throws ApiException
      */
     public function getPlan(string $planId): array
     {
-        return $this->get("subscriptions/plans/{$planId}");
+        return $this->get("subscriptions/plans/$planId");
     }
 
     /**
      * List all subscription plans
      *
      * @return array
+     * @throws ApiException
      */
     public function listPlans(): array
     {
@@ -61,7 +65,7 @@ class SubscriptionsService extends AbstractService
      *
      * @param array $data Subscription data
      * @return array
-     * @throws ValidationException
+     * @throws ValidationException|ApiException
      */
     public function create(array $data): array
     {
@@ -75,10 +79,11 @@ class SubscriptionsService extends AbstractService
      *
      * @param string $subscriptionId Subscription ID
      * @return array
+     * @throws ApiException
      */
     public function getSubscription(string $subscriptionId): array
     {
-        return $this->get("subscriptions/{$subscriptionId}");
+        return $this->get("subscriptions/$subscriptionId");
     }
 
     /**
@@ -86,6 +91,7 @@ class SubscriptionsService extends AbstractService
      *
      * @param array $filters Optional filters
      * @return array
+     * @throws ApiException
      */
     public function list(array $filters = []): array
     {
@@ -97,10 +103,11 @@ class SubscriptionsService extends AbstractService
      *
      * @param string $subscriptionId Subscription ID
      * @return array
+     * @throws ApiException
      */
     public function cancel(string $subscriptionId): array
     {
-        return $this->delete("subscriptions/{$subscriptionId}");
+        return $this->delete("subscriptions/$subscriptionId");
     }
 
     /**
@@ -112,6 +119,7 @@ class SubscriptionsService extends AbstractService
      * @param string $currency Fiat currency
      * @param array $options Additional options
      * @return array
+     * @throws ValidationException|ApiException
      */
     public function createSubscriptionPlan(
         string $title,
@@ -137,6 +145,7 @@ class SubscriptionsService extends AbstractService
      * @param string $email Customer email
      * @param array $options Additional options
      * @return array
+     * @throws ValidationException|ApiException
      */
     public function createSubscription(string $planId, string $email, array $options = []): array
     {
@@ -155,6 +164,7 @@ class SubscriptionsService extends AbstractService
      * @param int $limit Number of subscriptions to return
      * @param int $page Page number
      * @return array
+     * @throws ApiException
      */
     public function listByPlan(string $planId, int $limit = 10, int $page = 0): array
     {
@@ -172,6 +182,7 @@ class SubscriptionsService extends AbstractService
      * @param int $limit Number of subscriptions to return
      * @param int $page Page number
      * @return array
+     * @throws ApiException
      */
     public function listByStatus(string $status, int $limit = 10, int $page = 0): array
     {
@@ -188,6 +199,7 @@ class SubscriptionsService extends AbstractService
      * @param string $planId Plan ID
      * @param float $amount New amount
      * @return array
+     * @throws ApiException
      */
     public function updatePlanAmount(string $planId, float $amount): array
     {
@@ -200,6 +212,7 @@ class SubscriptionsService extends AbstractService
      * @param string $planId Plan ID
      * @param int $intervalDay New interval in days
      * @return array
+     * @throws ApiException
      */
     public function updatePlanInterval(string $planId, int $intervalDay): array
     {

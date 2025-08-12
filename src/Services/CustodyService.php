@@ -2,10 +2,11 @@
 
 namespace NowPayments\Services;
 
+use NowPayments\Exception\ApiException;
 use NowPayments\Exception\ValidationException;
 
 /**
- * Service for custody (sub-account) operations
+ * Service for custody (subaccount) operations
  */
 class CustodyService extends AbstractService
 {
@@ -14,6 +15,7 @@ class CustodyService extends AbstractService
      *
      * @param array $data User data
      * @return array
+     * @throws ApiException
      */
     public function createUser(array $data = []): array
     {
@@ -25,10 +27,11 @@ class CustodyService extends AbstractService
      *
      * @param int $userId User ID
      * @return array
+     * @throws ApiException
      */
     public function getBalance(int $userId): array
     {
-        return $this->get("sub-partner/balance/{$userId}");
+        return $this->get("sub-partner/balance/$userId");
     }
 
     /**
@@ -36,6 +39,7 @@ class CustodyService extends AbstractService
      *
      * @param array $filters Optional filters
      * @return array
+     * @throws ApiException
      */
     public function listUsers(array $filters = []): array
     {
@@ -47,7 +51,7 @@ class CustodyService extends AbstractService
      *
      * @param array $data Payment data
      * @return array
-     * @throws ValidationException
+     * @throws ValidationException|ApiException
      */
     public function createPayment(array $data): array
     {
@@ -61,7 +65,7 @@ class CustodyService extends AbstractService
      *
      * @param array $data Transfer data
      * @return array
-     * @throws ValidationException
+     * @throws ValidationException|ApiException
      */
     public function transfer(array $data): array
     {
@@ -75,6 +79,7 @@ class CustodyService extends AbstractService
      *
      * @param array $filters Optional filters
      * @return array
+     * @throws ApiException
      */
     public function listTransfers(array $filters = []): array
     {
@@ -86,10 +91,11 @@ class CustodyService extends AbstractService
      *
      * @param string $transferId Transfer ID
      * @return array
+     * @throws ApiException
      */
     public function getTransfer(string $transferId): array
     {
-        return $this->get("sub-partner/transfer/{$transferId}");
+        return $this->get("sub-partner/transfer/$transferId");
     }
 
     /**
@@ -97,7 +103,7 @@ class CustodyService extends AbstractService
      *
      * @param array $data Withdrawal data
      * @return array
-     * @throws ValidationException
+     * @throws ValidationException|ApiException
      */
     public function withdraw(array $data): array
     {
@@ -112,6 +118,7 @@ class CustodyService extends AbstractService
      * @param string|null $externalId External ID
      * @param string|null $email Email address
      * @return array
+     * @throws ApiException
      */
     public function createUserAccount(?string $externalId = null, ?string $email = null): array
     {
@@ -136,6 +143,7 @@ class CustodyService extends AbstractService
      * @param float|null $amount Amount (optional)
      * @param string|null $trackId Track ID (optional)
      * @return array
+     * @throws ApiException|ValidationException
      */
     public function createDepositPayment(int $userId, string $currency, ?float $amount = null, ?string $trackId = null): array
     {
@@ -151,7 +159,7 @@ class CustodyService extends AbstractService
         if ($trackId !== null) {
             $data['track_id'] = $trackId;
         }
-        
+
         return $this->createPayment($data);
     }
 
@@ -163,6 +171,7 @@ class CustodyService extends AbstractService
      * @param string $currency Currency
      * @param float $amount Amount
      * @return array
+     * @throws ApiException|ValidationException
      */
     public function transferBetweenUsers(int $fromUserId, int $toUserId, string $currency, float $amount): array
     {
@@ -181,6 +190,7 @@ class CustodyService extends AbstractService
      * @param string $currency Currency
      * @param float $amount Amount
      * @return array
+     * @throws ApiException|ValidationException
      */
     public function transferToMaster(int $userId, string $currency, float $amount): array
     {
@@ -199,6 +209,7 @@ class CustodyService extends AbstractService
      * @param string $currency Currency
      * @param float $amount Amount
      * @return array
+     * @throws ApiException|ValidationException
      */
     public function transferFromMaster(int $userId, string $currency, float $amount): array
     {
@@ -219,6 +230,7 @@ class CustodyService extends AbstractService
      * @param string $address External address
      * @param array $options Additional options
      * @return array
+     * @throws ApiException|ValidationException
      */
     public function withdrawToAddress(int $userId, string $currency, float $amount, string $address, array $options = []): array
     {
@@ -239,6 +251,7 @@ class CustodyService extends AbstractService
      * @param string $currency Currency
      * @param float $amount Amount
      * @return array
+     * @throws ApiException|ValidationException
      */
     public function withdrawToMaster(int $userId, string $currency, float $amount): array
     {
@@ -256,6 +269,7 @@ class CustodyService extends AbstractService
      * @param int $limit Number of transfers to return
      * @param int $offset Offset
      * @return array
+     * @throws ApiException
      */
     public function listTransfersByUser(int $userId, int $limit = 10, int $offset = 0): array
     {
@@ -273,6 +287,7 @@ class CustodyService extends AbstractService
      * @param int $limit Number of transfers to return
      * @param int $offset Offset
      * @return array
+     * @throws ApiException
      */
     public function listTransfersByStatus(string $status, int $limit = 10, int $offset = 0): array
     {

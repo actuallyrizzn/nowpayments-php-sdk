@@ -2,6 +2,8 @@
 
 namespace NowPayments\Services;
 
+use InvalidArgumentException;
+
 /**
  * Service for IPN (Instant Payment Notification) operations
  */
@@ -41,13 +43,14 @@ class IpnService extends AbstractService
      * @param string $requestBody The raw request body
      * @param string $signature The signature from X-NOWPAYMENTS-Sig header
      * @return bool
+     * @throws InvalidArgumentException
      */
     public function verifySignatureWithClientSecret(string $requestBody, string $signature): bool
     {
         $secret = $this->client->getIpnSecret();
         
         if ($secret === null) {
-            throw new \InvalidArgumentException('IPN secret not configured in client');
+            throw new InvalidArgumentException('IPN secret not configured in client');
         }
         
         return $this->verifySignature($requestBody, $signature, $secret);
@@ -82,7 +85,7 @@ class IpnService extends AbstractService
         $secret = $this->client->getIpnSecret();
         
         if ($secret === null) {
-            throw new \InvalidArgumentException('IPN secret not configured in client');
+            throw new InvalidArgumentException('IPN secret not configured in client');
         }
         
         return $this->processIpn($requestBody, $signature, $secret);

@@ -2,6 +2,7 @@
 
 namespace NowPayments\Services;
 
+use NowPayments\Exception\ApiException;
 use NowPayments\Exception\ValidationException;
 
 /**
@@ -14,7 +15,7 @@ class PaymentsService extends AbstractService
      *
      * @param array $data Payment data
      * @return array
-     * @throws ValidationException
+     * @throws ValidationException|ApiException
      */
     public function create(array $data): array
     {
@@ -28,10 +29,11 @@ class PaymentsService extends AbstractService
      *
      * @param int $paymentId Payment ID
      * @return array
+     * @throws ApiException
      */
     public function getStatus(int $paymentId): array
     {
-        return $this->get("payment/{$paymentId}");
+        return $this->get("payment/$paymentId");
     }
 
     /**
@@ -39,6 +41,7 @@ class PaymentsService extends AbstractService
      *
      * @param array $filters Optional filters
      * @return array
+     * @throws ApiException
      */
     public function list(array $filters = []): array
     {
@@ -50,10 +53,11 @@ class PaymentsService extends AbstractService
      *
      * @param int $paymentId Payment ID
      * @return array
+     * @throws ApiException
      */
     public function updateEstimate(int $paymentId): array
     {
-        return $this->post("payment/{$paymentId}/update-merchant-estimate");
+        return $this->post("payment/$paymentId/update-merchant-estimate");
     }
 
     /**
@@ -61,7 +65,7 @@ class PaymentsService extends AbstractService
      *
      * @param array $data Invoice data
      * @return array
-     * @throws ValidationException
+     * @throws ValidationException|ApiException
      */
     public function createInvoice(array $data): array
     {
@@ -75,10 +79,11 @@ class PaymentsService extends AbstractService
      *
      * @param string $invoiceId Invoice ID
      * @return array
+     * @throws ApiException
      */
     public function getInvoiceStatus(string $invoiceId): array
     {
-        return $this->get("invoice/{$invoiceId}");
+        return $this->get("invoice/$invoiceId");
     }
 
     /**
@@ -86,7 +91,7 @@ class PaymentsService extends AbstractService
      *
      * @param array $data Payment data for invoice
      * @return array
-     * @throws ValidationException
+     * @throws ValidationException|ApiException
      */
     public function createInvoicePayment(array $data): array
     {
@@ -103,6 +108,7 @@ class PaymentsService extends AbstractService
      * @param string $payCurrency Cryptocurrency to pay in (e.g., 'btc')
      * @param array $options Additional options
      * @return array
+     * @throws ValidationException|ApiException
      */
     public function createPayment(
         float $priceAmount,
@@ -124,6 +130,7 @@ class PaymentsService extends AbstractService
      *
      * @param int $paymentId Payment ID
      * @return array
+     * @throws ApiException
      */
     public function getPayment(int $paymentId): array
     {
@@ -137,6 +144,7 @@ class PaymentsService extends AbstractService
      * @param int $limit Number of payments to return
      * @param int $page Page number
      * @return array
+     * @throws ApiException
      */
     public function listByStatus(string $status, int $limit = 10, int $page = 0): array
     {
@@ -154,6 +162,7 @@ class PaymentsService extends AbstractService
      * @param int $limit Number of payments to return
      * @param int $page Page number
      * @return array
+     * @throws ApiException
      */
     public function listByCurrency(string $currency, int $limit = 10, int $page = 0): array
     {
@@ -172,6 +181,7 @@ class PaymentsService extends AbstractService
      * @param int $limit Number of payments to return
      * @param int $page Page number
      * @return array
+     * @throws ApiException
      */
     public function listByDateRange(string $dateFrom, string $dateTo, int $limit = 10, int $page = 0): array
     {
